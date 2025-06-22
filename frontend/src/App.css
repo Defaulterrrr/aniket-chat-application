@@ -1,0 +1,32 @@
+@import "tailwindcss";
+.active {
+  display: inline;
+  animation: slideright 0.5s backwards;
+}
+.dactive {
+  animation: slideleft 0.5s forwards;
+}
+
+.controloverflow {
+  overflow: hidden;
+}
+
+@keyframes slideright {
+  from {
+    transform: translateX(-400px);
+    width: 0%;
+  }
+  to {
+    transform: translateX(0px);
+    width: 100%;
+  }
+}
+@keyframes slideleft {
+  from {
+    width: 100%;
+    
+  }
+  to {
+    width: 0%;
+  }
+}
