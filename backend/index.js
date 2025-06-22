@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import Path from "path"; // yeh path ko import kar raha hai
 import { app, server } from "./socketIO/server.js"; // yeh socket.io ka server hai
 import cookieParser from "cookie-parser"; // yeh cookie ko parse kar raha hai
 import cors from "cors";
@@ -13,6 +14,18 @@ app.use(express.urlencoded({ extended: true })); // yeh url ko json main convert
 app.use(cookieParser()); // yeh cookie ko parse kar raha hai
 app.use(express.static("public")); // yeh public folder ko static bana raha hai
 app.use(cors()); // yeh cors ko use kar raha hai
+
+// ------------------code for deployment-------------------
+if (process.env.NODE_ENV === "production") {
+  // yeh check kar raha hai ki agar production main hai to
+  const dirPath = Path.resolve(); // yeh current directory ka path le raha hai
+
+  app.use(express.static("./frontend/dist")); // yeh frontend ki static files ko serve kar raha hai
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve( dirPath, "./frontend/dist", "index.html")); // yeh index.html file ko serve kar raha hai
+  });
+}
+
 dotenv.config();
 const PORT = process.env.PORT || 3002; //env file se port utha rha hai
 //env file se URI utha rha hai
