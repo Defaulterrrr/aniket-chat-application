@@ -1,6 +1,7 @@
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
 import mongoose from "mongoose";
+import express from "express";
 import Path from "path"; // yeh path ko import kar raha hai
 import { app, server } from "./socketIO/server.js"; // yeh socket.io ka server hai
 import cookieParser from "cookie-parser"; // yeh cookie ko parse kar raha hai
@@ -19,14 +20,20 @@ app.use(cors()); // yeh cors ko use kar raha hai
 if (process.env.NODE_ENV === "production") {
   // yeh check kar raha hai ki agar production main hai to
   const dirPath = Path.resolve(); // yeh current directory ka path le raha hai
-
   app.use(express.static("./frontend/dist")); // yeh frontend ki static files ko serve kar raha hai
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve( dirPath, "./frontend/dist", "index.html")); // yeh index.html file ko serve kar raha hai
+    res.sendFile(Path.resolve(dirPath, "./frontend/dist", "index.html")); // yeh index.html file ko serve kar raha hai
   });
 }
+// ---------------------------code for deployment-------------------
 
-dotenv.config();
+if (process.env.NODE_ENV !== "production") {
+  app.get("/", (req, res) => {
+    res.send("API is running...");
+  });
+}
+// -----------------end of code for deployment-------------------
+
 const PORT = process.env.PORT || 3002; //env file se port utha rha hai
 //env file se URI utha rha hai
 const URI = process.env.MONGOOS_URI; // yeh mongodb ki URI hai
