@@ -16,7 +16,7 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     let socketInstance;
     if (authUser) {
-      socketInstance = io("https://aniket-chat-application-1.onrender.com", {
+      socketInstance = io("https://aniket-chat-application-2.onrender.com", {
         query: {
           userId: authUser.user._id,
         },
