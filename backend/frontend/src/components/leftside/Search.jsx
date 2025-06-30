@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
-import useGetAllUsers from "../../context/useGetAllUsers";
+import useGetAllUsers from "../../context/UseGetAllUsers";
 import useConversation from "../../zustand/useConversation";
 
 const Search = React.memo(() => {
