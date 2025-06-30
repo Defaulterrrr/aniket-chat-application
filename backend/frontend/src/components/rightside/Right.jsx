@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Header from "./header";
+import Header from "./Header";
 import Typesend from "./Typesend";
 import Messages from "./Messages";
 import "../../App.css";
