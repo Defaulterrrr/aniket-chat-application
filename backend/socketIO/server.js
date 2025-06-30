@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://aniket-chat-application-2.onrender.com", // Replace with your frontend URL
+    origin: "https://aniket-chat-application-5.onrender.com", // Replace with your frontend URL
     methods: ["GET", "POST"],
   },
 });
