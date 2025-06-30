@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-const useGetAllUsers = () => {
+const UseGetAllUsers = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -37,4 +37,4 @@ const useGetAllUsers = () => {
   return [allUsers, loading];
 };
 
-export default useGetAllUsers;
+export default UseGetAllUsers;

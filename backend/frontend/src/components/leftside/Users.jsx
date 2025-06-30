@@ -1,6 +1,6 @@
 import React from "react";
 import Msg from "./Msg";
-import useGetAllUsers from "../../context/useGetAllUsers.jsx";
+import useGetAllUsers from "../../context/UseGetAllUsers.jsx";
 import useConversation from "../../zustand/useConversation.js";
 
 const Users = React.memo(() => {
