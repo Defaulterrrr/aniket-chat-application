@@ -88,7 +88,7 @@ export const logOut = (req, res) => {
   }
 };
 
-export const getAllUser = async (req, res) => {
+export const allUsers = async (req, res) => {
   try {
     // Fetch all users from the database
     // You can use pagination or filtering if needed

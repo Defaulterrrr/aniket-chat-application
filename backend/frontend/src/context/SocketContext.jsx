@@ -16,7 +16,7 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     let socketInstance;
     if (authUser) {
-      socketInstance = io("https://aniket-chat-application-5.onrender.com", {
+      socketInstance = io("http://localhost:4002", {
         query: {
           userId: authUser.user._id,
         },
@@ -37,7 +37,7 @@ export const SocketProvider = ({ children }) => {
         setSocket(null);
       }
     }
-  }, [authUser]);
+  },);
   return (
     <SocketContext.Provider value={{ socket, onlineUsers }}>
       {children}
