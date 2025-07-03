@@ -20,6 +20,7 @@ const secureRoute = async (req, res, next) => {
     next(); // Proceed to the next middleware or route handler
   } catch (error) {
     console.error("Error in secureRoute middleware:", error);
+    return res.status(401).json({ message: "Unauthorized: Invalid or expired token" });
   }
 };
 export default secureRoute;

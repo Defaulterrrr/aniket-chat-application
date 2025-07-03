@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import Chat from "./Chat";
+import Chat from "./Chat.jsx";
 import Loading from "../Loading.jsx";
 import useGetMessages from "../../context/useGetMessages.js";
 import useGetSocketMessage from "../../context/useGetSocketMessage.js";
