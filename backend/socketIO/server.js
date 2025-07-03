@@ -8,8 +8,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: [
-      // "https://aniket-chat-application-6.onrender.com", // Replace with your frontend URL
-      "http://localhost:3001", // Replace with your frontend URL
+      "https://ma-chatapp.onrender.com", // Replace with your frontend URL
+      // "http://localhost:3001", // Replace with your frontend URL
     ],
     methods: ["GET", "POST"],
   },
