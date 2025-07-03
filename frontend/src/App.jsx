@@ -4,7 +4,7 @@ import "./index.css"; // Importing the index CSS file
 import Left from "./components/leftside/Left";
 import Right from "./components/rightside/Right";
 import SignUp from "./components/home/SignUp";
-import toast, { Toaster } from "react-hot-toast"; // Importing react-hot-toast for notifications
+import { Toaster } from "react-hot-toast"; // Importing react-hot-toast for notifications
 import UseGetAllUsers from "./context/UseGetAllUsers.jsx";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./context/authProvider.jsx"; // Importing the Auth context
@@ -27,7 +27,7 @@ function App() {
                 <Right/>
               </div>
             ) : (
-              <SignUp />
+              <SignIn />
             )
           }
         />

@@ -15,7 +15,7 @@ function SignIn() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+ 
       if (response.status === 400) {
         toast.error("User not found");
         return;
@@ -33,7 +33,7 @@ function SignIn() {
         window.location.reload();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(`Network errorr Please try again.`);
     }
   };

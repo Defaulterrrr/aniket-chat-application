@@ -8,8 +8,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: [
-      "https://aniket-chat-application-6.onrender.com", // Replace with your frontend URL
-      // "http://localhost:4002",
+      // "https://aniket-chat-application-6.onrender.com", // Replace with your frontend URL
+      "http://localhost:3001", // Replace with your frontend URL
     ],
     methods: ["GET", "POST"],
   },
@@ -30,7 +30,7 @@ const users = {};
 
 //used to listen for incoming connections
 io.on("connection", (socket) => {
-  console.log("connected User socketID:", socket.id);
+  console.log("New Connection", socket.id);
   const userId = socket.handshake.query.userId; // Get userId from the query parameters
   // userID main socket id se map hota hai ye exact id hai jo mongo main save hoti hai
   if (userId) {

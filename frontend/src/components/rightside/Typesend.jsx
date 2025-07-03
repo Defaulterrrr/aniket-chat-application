@@ -5,17 +5,15 @@ import useSendMessages from "../../context/useSendMessage";
 function Typesend() {
   const [input, setInput] = useState("");
   const [loading, sendMessages] = useSendMessages();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const trimmed = input.trim();
     if (!trimmed) return;
     // Attach current time for real-time communication
-    const messageObj = {
+    const message = {
       message: trimmed,
-      createdAt: new Date().toISOString(),
     };
-    await sendMessages(messageObj);
+    await sendMessages(message);
     setInput("");
   };
 

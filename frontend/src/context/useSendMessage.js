@@ -16,7 +16,10 @@ const useSendMessage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message }),
+          body: JSON.stringify({
+            message:message.message,
+            createdAt: new Date().toISOString(), // Attach current time for real-time communication
+            }),
         }
       );
       if (response.ok) {

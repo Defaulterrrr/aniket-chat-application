@@ -1,16 +1,14 @@
 import mongoose from "mongoose"; // Import mongoose for MongoDB object modeling
 import Conversation from "../models/coversation.model.js"; // Import the Conversation model
-import user from "../models/user.model.js"; // Import the User model (not used in this function but might be needed later)
 import Message from "../models/message.model.js"; // Import the Message model
-import { io } from "../socketIO/server.js"; // Import the socket.io instance
-import { getReceiverSocketId } from "../socketIO/server.js";
+import { getReceiverSocketId, io } from "../socketIO/server.js";
 // Function to send a message
-const sendMessage = async (req, res) => {
+export const sendMessage = async (req, res) => {
   // console.log("sendMessage called", req.params.id, req.body.message)
   try {
     const { message } = req.body; // Destructure message from req.body
-    const senderId = new mongoose.Types.ObjectId(req.user._id); // Get the senderId from the request object (assuming req.user is populated with user data)
-    const receiverId = new mongoose.Types.ObjectId(req.params.id); // Get the receiverId from the request parameters
+    const senderId = new mongoose.Types.ObjectId(req.user._id); // current logged in user
+    const receiverId  = new mongoose.Types.ObjectId(req.params.id); // Get the receiverId from the request parameters
     console.log("senderId", senderId, "receiverId", receiverId);
     // Check if the senderId and receiverId are the same
     if (senderId.equals(receiverId)) {
@@ -53,10 +51,10 @@ const sendMessage = async (req, res) => {
       // Emit the new message to the receiver's socket
       // Assuming you have a socket.io instance available, you can emit the message here
       const receiverSocketId = getReceiverSocketId(receiverId); // Get the socket ID of the receiver
-      if(receiverSocketId) {
+      if (receiverSocketId) {
         io.to(receiverSocketId).emit("newMessage", newMessage);
       }
-        res
+      res
         .status(200)
         .json({ message: "Message sent successfully", newMessage }); // Send a response indicating that the message was sent
     } catch (error) {
@@ -68,12 +66,12 @@ const sendMessage = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-export default sendMessage;
+// export default sendMessage;
 
-export const getMessages = async (req, res) => {
+export const getMessage = async (req, res) => {
   try {
-    const senderId = new mongoose.Types.ObjectId(req.user._id); // Get the senderId from the request object (assuming req.user is populated with user data)
     const chatUser = new mongoose.Types.ObjectId(req.params.id); // Get the receiverId from the request parameters
+    const senderId = new mongoose.Types.ObjectId(req.user._id); // Get the senderId from the request object (assuming req.user is populated with user data)
     let conversation = await Conversation.findOne({
       members: { $all: [senderId, chatUser] },
     }).populate("messages"); // Find the conversation where both sender and receiver are members and populate the messages field
@@ -86,7 +84,7 @@ export const getMessages = async (req, res) => {
     const messages = await Message.find({
       _id: { $in: conversation.messages },
     }).sort({ createdAt: -1 }); // Sort messages by createdAt in descending order
-    return res.status(201).json({ messages});
+    return res.status(201).json({ messages });
   } catch (error) {
     console.error("Error in getMessages:", error);
     res.status(500).json({ error: "Internal server error" });

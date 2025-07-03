@@ -6,7 +6,9 @@ import { io } from "socket.io-client";
 // Create context ONCE, outside the hook
 const SocketContext = createContext();
 
-export const useSocketContext = () => useContext(SocketContext);
+export const useSocketContext = () => {
+  return useContext(SocketContext);
+};
 
 export const SocketProvider = ({ children }) => {
   const [authUser] = useAuth();
@@ -14,30 +16,27 @@ export const SocketProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
-    let socketInstance;
+    // let socketInstance;
     if (authUser) {
-      socketInstance = io("https://aniket-chat-application-6.onrender.com", {
+      const socket = io("http://localhost:4002", {
         query: {
           userId: authUser.user._id,
         },
         transports: ["websocket"], // Fastest transport, avoids polling
       });
-      setSocket(socketInstance);
-      socketInstance.on("getOnlineUsers", (users) => {
+      setSocket(socket);
+      socket.on("getOnlineUsers", (users) => {
         setOnlineUsers(users);
       });
-      // return () =>{
-        // socketInstance.disconnect();
-        // setSocket(null);
-      // }
+      // return () => socket.close(); // Clean up on unmount
     } else {
       // Clean up if user log out
       if (socket) {
-        socket.disconnect();
+        socket.close();
         setSocket(null);
       }
     }
-  },[authUser , socket]);
+  }, [authUser]);
   return (
     <SocketContext.Provider value={{ socket, onlineUsers }}>
       {children}

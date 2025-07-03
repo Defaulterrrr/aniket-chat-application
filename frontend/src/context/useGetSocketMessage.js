@@ -5,23 +5,21 @@ import sound from "../assets/bellnotification.mp3"; // Import the notification s
 // This hook is used to get the socket message and update the conversation state
 const useGetSocketMessage = () => {
   const { socket } = useSocketContext();
-  const { setMessages } = useConversation();
+  const {messages, setMessages } = useConversation();
   useEffect(() => {
     if (!socket) return; // Ensure socket is available before setting up the listener
-    // Listen for new messages from the socket
+    // Listen for new messages from the socke
 
-    const handleNewMessage = (newMessage) => {
+    socket.on("newMessage", (newMessage) => {
       const notificationSound = new Audio(sound);
       notificationSound.play(); // Play the notification sound when a new message is received
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-    };
-
-    socket.on("newMessage", handleNewMessage); // Set up the event listener for new messages
+      setMessages((prev)=> [...prev, newMessage]); // Update the messages state with the new message
+    }); // Set up the event listener for new messages
     // Clean up the event listener when the component unmounts
     return () => {
-      socket.off("newMessage", handleNewMessage); // Clean up the event listener when the component unmounts
+      socket.off("newMessage"); // Clean up the event listener when the component unmounts
     };
-  }, [socket, setMessages]);
+  }, [socket, messages, setMessages]);
 };
 
 export default useGetSocketMessage;
